@@ -22,9 +22,9 @@ func (p *Planner) Plan(input []model.Slot) ([]model.Slot, error) {
 	if p.current != nil {
 		out = append(out, *p.current)
 	}
-	if len(out) >= 2 {
-		out[0], out[1] = out[1], out[0]
-	}
+	// Preserve the input order exactly: the team logo reveal order must match
+	// the input, and each slot's time-slot position must stay aligned. Do not
+	// permute the planned slots here.
 	return out, nil
 }
 func (p *Planner) Validate(input, output []model.Slot) error {
